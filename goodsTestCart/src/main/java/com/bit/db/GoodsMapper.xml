@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods">
+	
+	<select id="nextOrdersNo" resultType="java.lang.Integer">
+		select nvl(max(no),0)+1 from goods_orders
+	</select>
+	
+	<insert id="insertOrders">
+		insert into goods_orders values(#{no},#{id},#{total},#{addr},sysdate)
+	</insert>
+	
+	<insert id="insertDetail">
+		insert into orders_detail values(seq_od.nextval,#{gno},#{qty},#{ono})
+	</insert>
+	
+	<update id="downQty">
+		update goods set qty = qty - #{qty} where no = #{gno}
+	</update>
+	
+	
+	
+	<delete id="delete">
+		delete goods where no=#{no}
+	</delete>
+	
+	<update id="update">
+		update goods set item=#{item},price=#{price},qty=#{qty},fname=#{fname} where no=#{no}
+	</update>
+	
+	<select id="getGoods" resultType="goodsVo">
+		select * from goods where no=#{no}
+	</select>
+	
+	<insert id="insert">
+		insert into goods values(#{no},#{item},#{price},#{qty},#{fname})
+	</insert>
+	
+	<select id="selectAll" resultType="goodsVo">
+	   select * from goods	 
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
